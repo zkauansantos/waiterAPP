@@ -1,11 +1,35 @@
-import { Text } from '../components/Text';
-import { Container } from './styles';
+import Categories from '../components/Categories';
+import Header from '../components/Header';
+import Menu from '../components/Menu';
+import {
+	Container,
+	CategoriesContainer,
+	MenuContainer,
+	Footer,
+	FooterContainer,
+} from './styles';
 
-export function Main () {
+export default function Main () {
 
 	return (
-		<Container>
-			<Text> Main Renderizou</Text>
-		</Container>
+		<>
+			<Container>
+				<Header />
+
+				<CategoriesContainer>
+					<Categories />
+				</CategoriesContainer>
+
+				<MenuContainer>
+					<Menu />
+				</MenuContainer>
+
+			</Container>
+			<Footer>
+				<FooterContainer>
+
+				</FooterContainer>
+			</Footer>
+		</>
 	);
 }

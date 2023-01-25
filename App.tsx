@@ -1,5 +1,5 @@
 import { useFonts } from 'expo-font';
-import { Main } from './src/Main';
+import Main from './src/Main';
 import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
@@ -16,7 +16,7 @@ export default function App() {
 	return (
 		<>
 			<Main/>
-			<StatusBar style='dark'/>
+			<StatusBar style="dark"/>
 		</>
 	);
 }
