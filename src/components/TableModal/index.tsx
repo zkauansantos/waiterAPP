@@ -16,8 +16,14 @@ export default function TableModal ({ visible, onCloseModal, onSaveTable } : Tab
 	const isAndroid = Platform.OS == 'android';
 
 	function handleSave (){
+		setTableNumber('');
 		onSaveTable(tableNumber);
 		onCloseModal();
+	}
+
+	function handleCloseByIcon (){
+		onCloseModal();
+		setTableNumber('');
 	}
 
 	return (
@@ -30,7 +36,7 @@ export default function TableModal ({ visible, onCloseModal, onSaveTable } : Tab
 				<ModalBody>
 					<ModalHeader>
 						<Text weight="600">Informe a mesa</Text>
-						<TouchableOpacity onPress={onCloseModal}><Close color='#f00'/></TouchableOpacity>
+						<TouchableOpacity onPress={handleCloseByIcon}><Close color='#f00'/></TouchableOpacity>
 					</ModalHeader>
 					<ModalForm>
 						<Input
