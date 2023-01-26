@@ -5,3 +5,20 @@ export const Container = styled.View`
 	display: flex;
 	flex-direction: column;
 `;
+
+export const ContentOrder = styled.View`
+`;
+
+export const OrderHeader = styled.View`
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+`;
+
+export const Table = styled.View`
+	padding: 16px;
+	background: #fff;
+	border: 1px solid rgba(204, 204, 204, 0.8);
+	margin-top: 24px;
+	border-radius: 8px;
+`;

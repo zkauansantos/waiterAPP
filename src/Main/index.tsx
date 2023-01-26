@@ -14,16 +14,23 @@ import {
 
 export default function Main () {
 	const [isModalVisible, setIsModalVisible] = useState(false);
-	const [selectedTable, setSelectedTable] = useState('');
+	const [tableSelected, setTableSelected] = useState('');
 
 	function handleSaveTable(table : string) {
-		setSelectedTable(table);
+		setTableSelected(table);
+	}
+
+	function handleCancelOrder () {
+		setTableSelected('');
 	}
 
 	return (
 		<>
 			<Container>
-				<Header />
+				<Header
+					tableSelected={tableSelected}
+					onCancelOrder={handleCancelOrder}
+				/>
 
 				<CategoriesContainer>
 					<Categories />
@@ -36,7 +43,7 @@ export default function Main () {
 			</Container>
 			<Footer>
 				<FooterContainer>
-					{!selectedTable && <Button onPress={() => setIsModalVisible(true)} >
+					{!tableSelected && <Button onPress={() => setIsModalVisible(true)} >
 						Novo Pedido
 					</Button>}
 				</FooterContainer>
