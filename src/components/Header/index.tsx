@@ -8,6 +8,7 @@ interface HeaderProps {
 }
 
 export default function Header ({ tableSelected, onCancelOrder } : HeaderProps) {
+
 	return (
 		<Container>
 			{!tableSelected && (

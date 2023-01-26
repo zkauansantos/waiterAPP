@@ -14,7 +14,12 @@ import {
 } from './styles';
 import { Product } from '../../types/Product';
 
-export default function Menu () {
+interface MenuProps {
+	onAddToCart: (product: Product) => void
+}
+
+
+export default function Menu ({ onAddToCart } : MenuProps) {
 	const [productModalIsVisible, setProductModalIsVisible] = useState(false);
 	const [productSelected, setProductSelected] = useState<null | Product>(null);
 
@@ -26,6 +31,7 @@ export default function Menu () {
 	return (
 		<>
 			<ProductModal
+				onAddToCart={onAddToCart}
 				productSelected={productSelected}
 				visible={productModalIsVisible}
 				onClose={() => setProductModalIsVisible(false)}
@@ -50,7 +56,7 @@ export default function Menu () {
 							<Text size={14} weight="600">{formatCurrency(product.price)}</Text>
 						</ProductDetails>
 
-						<AddToCartButton>
+						<AddToCartButton onPress={() => onAddToCart(product)}>
 							<PlusCircle />
 						</AddToCartButton>
 					</ProductContainer>
