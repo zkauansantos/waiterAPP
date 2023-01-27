@@ -9,20 +9,26 @@ import {
 	MenuContainer,
 	Footer,
 	FooterContainer,
+	CenteredContainer,
 } from './styles';
 import Cart from '../components/Cart';
 import useMain from './useMain';
+import { ActivityIndicator } from 'react-native';
+import { Empty } from '../components/Icons/Empty';
+import { Text } from '../components/Text';
 
 export default function Main () {
 	const {
 		tableSelected,
 		isModalVisible,
 		cartItems,
+		isLoading,
+		products,
 		handleAddToCart,
 		setIsModalVisible,
 		handleRemoveToCart,
 		handleSaveTable,
-		handleCancelOrder,
+		handleResetOrder,
 	} = useMain();
 
 
@@ -31,28 +37,52 @@ export default function Main () {
 			<Container>
 				<Header
 					tableSelected={tableSelected}
-					onCancelOrder={handleCancelOrder}
+					onCancelOrder={handleResetOrder}
 				/>
 
-				<CategoriesContainer>
-					<Categories />
-				</CategoriesContainer>
+				{isLoading && (
+					<CenteredContainer>
+						<ActivityIndicator size={60} color="#D73035"/>
+					</CenteredContainer>
+				)}
 
-				<MenuContainer>
-					<Menu onAddToCart={handleAddToCart} />
-				</MenuContainer>
+				{!isLoading && (
+					<>
+						<CategoriesContainer>
+							<Categories />
+						</CategoriesContainer>
+
+						{products.length > 0 ? (
+							<MenuContainer>
+								<Menu
+									products={products}
+									onAddToCart={handleAddToCart} />
+							</MenuContainer>
+						) : (
+							<CenteredContainer>
+								<Empty/>
+								<Text color="#666" style={{ marginTop: 24 }}>Nenhum Produto foi encontrado!</Text>
+							</CenteredContainer>
+						)}
+					</>
+				)}
 
 			</Container>
 			<Footer>
 				<FooterContainer>
 					{!tableSelected && (
-						<Button onPress={() => setIsModalVisible(true)} >
+						<Button onPress={() => setIsModalVisible(true)} disabled={isLoading}>
 							Novo Pedido
 						</Button>
 					)}
 
 					{tableSelected && (
-						<Cart cartItems={cartItems} onAdd={handleAddToCart} onDecrement={handleRemoveToCart}/>
+						<Cart
+							cartItems={cartItems}
+							onAdd={handleAddToCart}
+							onDecrement={handleRemoveToCart}
+							onConfirmOrder={handleResetOrder}
+						/>
 					)}
 				</FooterContainer>
 			</Footer>

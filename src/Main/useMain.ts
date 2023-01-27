@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { CartItem } from '../types/CartItem';
 import { Product } from '../types/Product';
+import { products as mocksProducts } from '../mocks/products';
 
 export default function useMain() {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [tableSelected, setTableSelected] = useState('');
 	const [cartItems, setCartItems] = useState<CartItem[]>([]);
-
+	const [isLoading, setIsLoading] = useState(false);
+	const [products] = useState<Product[]>([]);
 
 	function handleAddToCart (product: Product) {
 		if(!tableSelected) {
@@ -60,19 +62,23 @@ export default function useMain() {
 		setTableSelected(table);
 	}
 
-	function handleCancelOrder () {
+	function handleResetOrder () {
 		setTableSelected('');
 		setCartItems([]);
 	}
+
+
 
 	return {
 		tableSelected,
 		isModalVisible,
 		cartItems,
+		isLoading,
+		products,
 		handleAddToCart,
 		setIsModalVisible,
 		handleRemoveToCart,
 		handleSaveTable,
-		handleCancelOrder,
+		handleResetOrder,
 	};
 }

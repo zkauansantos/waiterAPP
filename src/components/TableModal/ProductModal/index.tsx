@@ -84,7 +84,7 @@ export default function ProductModal ({ visible, onClose, productSelected, onAdd
 						<Text color="#666">Preço</Text>
 						<Text weight="600" size={20}>{formatCurrency(productSelected.price)}</Text>
 					</PriceContainer>
-					<Button onPress={() => handleAddToCart(productSelected)}>
+					<Button onPress={() => handleAddToCart(productSelected)} >
 						Adicionar ao Pedido
 					</Button>
 				</FooterContainer>
