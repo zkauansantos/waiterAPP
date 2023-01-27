@@ -46,7 +46,7 @@ export default function Menu ({ onAddToCart, products } : MenuProps) {
 				renderItem={({ item: product }) => (
 					<ProductContainer onPress={() => handleSelectProduct(product)}>
 						<ProductImage source={{
-							uri: `${product.imagePath}`,
+							uri: `http://10.0.2.2:3001/uploads/${product.imagePath}`,
 						}}/>
 						<ProductDetails>
 							<Text weight="600">{product.name}</Text>

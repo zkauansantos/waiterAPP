@@ -1,14 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CartItem } from '../types/CartItem';
 import { Product } from '../types/Product';
-import { products as mocksProducts } from '../mocks/products';
+import { Category } from '../types/Category';
+import axios from 'axios';
 
 export default function useMain() {
-	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [tableSelected, setTableSelected] = useState('');
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	const [isLoadingProducts, setIsLoadingProducts] = useState(false);
 	const [cartItems, setCartItems] = useState<CartItem[]>([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [products] = useState<Product[]>([]);
+	const [categories, setCategories] = useState<Category[]>([]);
+	const [products, setProducts] = useState<Product[]>([]);
+
+
+	useEffect(() => {
+		Promise.all([
+			axios.get('http://10.0.2.2:3001/categories'),
+			axios.get('http://10.0.2.2:3001/products'),
+
+		]).then(([categoriesResponse, productsResponse]) => {
+			setCategories(categoriesResponse.data);
+			setProducts(productsResponse.data);
+			setIsLoading(false);
+		});
+	}, []);
+
+	function handleSelectCategory (categoryId: string) {
+		const route = !categoryId
+			? 'http://10.0.2.2:3001/products'
+			: `http://10.0.2.2:3001/categories/${categoryId}/products`;
+
+		setIsLoadingProducts(true);
+
+		axios.get(route).then((response) => {
+			setProducts(response.data);
+		});
+
+		setIsLoadingProducts(false);
+	}
 
 	function handleAddToCart (product: Product) {
 		if(!tableSelected) {
@@ -67,18 +97,19 @@ export default function useMain() {
 		setCartItems([]);
 	}
 
-
-
 	return {
 		tableSelected,
 		isModalVisible,
 		cartItems,
 		isLoading,
 		products,
+		categories,
+		isLoadingProducts,
 		handleAddToCart,
 		setIsModalVisible,
 		handleRemoveToCart,
 		handleSaveTable,
 		handleResetOrder,
+		handleSelectCategory,
 	};
 }

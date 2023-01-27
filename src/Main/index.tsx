@@ -24,11 +24,14 @@ export default function Main () {
 		cartItems,
 		isLoading,
 		products,
+		categories,
+		isLoadingProducts,
 		handleAddToCart,
 		setIsModalVisible,
 		handleRemoveToCart,
 		handleSaveTable,
 		handleResetOrder,
+		handleSelectCategory,
 	} = useMain();
 
 
@@ -49,20 +52,32 @@ export default function Main () {
 				{!isLoading && (
 					<>
 						<CategoriesContainer>
-							<Categories />
+							<Categories
+								categories={categories}
+								onSelectCategory={handleSelectCategory}
+							/>
 						</CategoriesContainer>
 
-						{products.length > 0 ? (
-							<MenuContainer>
-								<Menu
-									products={products}
-									onAddToCart={handleAddToCart} />
-							</MenuContainer>
-						) : (
+						{isLoadingProducts ? (
 							<CenteredContainer>
-								<Empty/>
-								<Text color="#666" style={{ marginTop: 24 }}>Nenhum Produto foi encontrado!</Text>
+								<ActivityIndicator size={60} color="#D73035"/>
 							</CenteredContainer>
+						) : (
+							<>
+								{products.length > 0 ? (
+									<MenuContainer>
+										<Menu
+											products={products}
+											onAddToCart={handleAddToCart} />
+									</MenuContainer>
+								) : (
+									<CenteredContainer>
+										<Empty/>
+										<Text color="#666" style={{ marginTop: 24 }}>Nenhum Produto foi encontrado!</Text>
+									</CenteredContainer>
+								)}
+
+							</>
 						)}
 					</>
 				)}
@@ -78,6 +93,7 @@ export default function Main () {
 
 					{tableSelected && (
 						<Cart
+							selectedTable={tableSelected}
 							cartItems={cartItems}
 							onAdd={handleAddToCart}
 							onDecrement={handleRemoveToCart}

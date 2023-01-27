@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { CartItem } from '../../types/CartItem';
@@ -20,13 +21,14 @@ import {
 } from './styles';
 
 interface CartProps {
-	cartItems: CartItem[]
-	onAdd: (product: Product) => void
-	onDecrement: (product: Product) => void
-	onConfirmOrder(): void
+	cartItems: CartItem[];
+	onAdd: (product: Product) => void;
+	onDecrement: (product: Product) => void;
+	onConfirmOrder(): void;
+	selectedTable: string
 }
 
-export default function Cart ({ cartItems, onAdd, onDecrement, onConfirmOrder }: CartProps ) {
+export default function Cart ({ cartItems, onAdd, onDecrement, onConfirmOrder, selectedTable }: CartProps ) {
 	const [modalConfirmOrderVisible, setModalConfirmOrderVisible] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const total = cartItems.reduce((accumulator, item) => {
@@ -36,10 +38,16 @@ export default function Cart ({ cartItems, onAdd, onDecrement, onConfirmOrder }:
 	async function handleConfirmOrder () {
 		setIsLoading(true);
 
-		setTimeout(() => {
-			setIsLoading(false);
-			setModalConfirmOrderVisible(true);
-		}, 6000);
+		axios.post('http://10.0.2.2:3001/orders', {
+			table: selectedTable,
+			products: cartItems.map((cartItem) => ({
+				product: cartItem.product._id,
+				quantity: cartItem.quantity,
+			})),
+		});
+
+		setIsLoading(false);
+		setModalConfirmOrderVisible(true);
 	}
 
 	function handleOk () {
@@ -59,7 +67,7 @@ export default function Cart ({ cartItems, onAdd, onDecrement, onConfirmOrder }:
 						<ProductContainer>
 							<Image
 								source={{
-									uri: `${cartItem.product.imagePath}`,
+									uri: `http://10.0.2.2:3001/uploads/${cartItem.product.imagePath}`,
 								}}
 							/>
 							<QuantityContainer>
