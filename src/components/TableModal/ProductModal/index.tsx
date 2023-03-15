@@ -43,7 +43,7 @@ export default function ProductModal ({ visible, onClose, productSelected, onAdd
 		>
 			<ImageContainer
 				source={{
-					uri: `http://10.0.2.2:3001/uploads/${productSelected.imagePath}`,
+					uri: `http://192.168.100.70:3001/uploads/${productSelected.imagePath}`,
 				}}
 			>
 				<CloseButton onPress={onClose}>

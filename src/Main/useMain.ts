@@ -16,8 +16,8 @@ export default function useMain() {
 
 	useEffect(() => {
 		Promise.all([
-			axios.get('http://10.0.2.2:3001/categories'),
-			axios.get('http://10.0.2.2:3001/products'),
+			axios.get('http://192.168.100.70:3001/categories'),
+			axios.get('http://192.168.100.70:3001/products'),
 
 		]).then(([categoriesResponse, productsResponse]) => {
 			setCategories(categoriesResponse.data);
@@ -28,8 +28,8 @@ export default function useMain() {
 
 	function handleSelectCategory (categoryId: string) {
 		const route = !categoryId
-			? 'http://10.0.2.2:3001/products'
-			: `http://10.0.2.2:3001/categories/${categoryId}/products`;
+			? 'http://192.168.100.70:3001/products'
+			: `http://192.168.100.70:3001/categories/${categoryId}/products`;
 
 		setIsLoadingProducts(true);
 
