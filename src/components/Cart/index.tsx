@@ -38,7 +38,7 @@ export default function Cart ({ cartItems, onAdd, onDecrement, onConfirmOrder, s
 	async function handleConfirmOrder () {
 		setIsLoading(true);
 
-		axios.post('http://192.168.100.70:3001/orders', {
+		axios.post('http://192.168.100.85:3001/orders', {
 			table: selectedTable,
 			products: cartItems.map((cartItem) => ({
 				product: cartItem.product._id,
@@ -67,7 +67,7 @@ export default function Cart ({ cartItems, onAdd, onDecrement, onConfirmOrder, s
 						<ProductContainer>
 							<Image
 								source={{
-									uri: `http://192.168.100.70:3001/uploads/${cartItem.product.imagePath}`,
+									uri: `http://192.168.100.85:3001/uploads/${cartItem.product.imagePath}`,
 								}}
 							/>
 							<QuantityContainer>

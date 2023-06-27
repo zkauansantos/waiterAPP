@@ -17,7 +17,7 @@ import { ActivityIndicator } from 'react-native';
 import { Empty } from '../components/Icons/Empty';
 import { Text } from '../components/Text';
 
-export default function Main () {
+export default function Main() {
 	const {
 		tableSelected,
 		isModalVisible,
@@ -34,7 +34,6 @@ export default function Main () {
 		handleSelectCategory,
 	} = useMain();
 
-
 	return (
 		<>
 			<Container>
@@ -45,7 +44,7 @@ export default function Main () {
 
 				{isLoading && (
 					<CenteredContainer>
-						<ActivityIndicator size={60} color="#D73035"/>
+						<ActivityIndicator size={60} color='#D73035' />
 					</CenteredContainer>
 				)}
 
@@ -60,34 +59,35 @@ export default function Main () {
 
 						{isLoadingProducts ? (
 							<CenteredContainer>
-								<ActivityIndicator size={60} color="#D73035"/>
+								<ActivityIndicator size={60} color='#D73035' />
 							</CenteredContainer>
 						) : (
 							<>
 								{products.length > 0 ? (
 									<MenuContainer>
-										<Menu
-											products={products}
-											onAddToCart={handleAddToCart} />
+										<Menu products={products} onAddToCart={handleAddToCart} />
 									</MenuContainer>
 								) : (
 									<CenteredContainer>
-										<Empty/>
-										<Text color="#666" style={{ marginTop: 24 }}>Nenhum Produto foi encontrado!</Text>
+										<Empty />
+										<Text color='#666' style={{ marginTop: 24 }}>
+                      Nenhum Produto foi encontrado!
+										</Text>
 									</CenteredContainer>
 								)}
-
 							</>
 						)}
 					</>
 				)}
-
 			</Container>
 			<Footer>
 				<FooterContainer>
 					{!tableSelected && (
-						<Button onPress={() => setIsModalVisible(true)} disabled={isLoading}>
-							Novo Pedido
+						<Button
+							onPress={() => setIsModalVisible(true)}
+							disabled={isLoading}
+						>
+              Novo Pedido
 						</Button>
 					)}
 
